@@ -16,7 +16,22 @@ router.get('/all', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-	
+	const { id } = req.params;
+	if (id) {
+		const split = id.split('&');
+		if(split.length > 1) {
+			const team = data[split[0]].teams[split[1]]
+			if(team) {
+				res.json(team);
+			} else {
+				res.send('Team id not found');
+			}
+		} else {
+			res.send('Team id not found');
+		}
+	} else {
+		res.send('Id was not provided');
+	}
 })
 
 module.exports = router;
